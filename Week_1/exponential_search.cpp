@@ -4,9 +4,8 @@ using namespace std;
 // Given an array and a key, search the key in the array
 // if found print the number of comparisons made else print -1
 
-// Binary Seacrh, input must be sorted
-int binarySearch(vector<int> &arr, int key, int &comps){
-    int low = 0, high = arr.size()-1;
+
+int binarySearch(vector<int> &arr, int low, int high, int key, int &comps){
     while(low<=high){
         int mid = ((long long)low+high)/2;
         comps++;
@@ -16,6 +15,19 @@ int binarySearch(vector<int> &arr, int key, int &comps){
     }
     return -1;
 }
+
+int expSearch(vector<int> &arr, int key, int &comps){
+    int low = 1, high = 2, n = arr.size();
+    while(high <= n){
+        comps++;
+        if(arr[high-1] > key) break;
+        low = high;
+        high <<= 1;
+    }
+    if(high > n) high = n;
+    return binarySearch(arr, low-1, high-1, key, comps);
+}
+
 
 
 int main(){
@@ -37,7 +49,7 @@ int main(){
         }
         cin >> key;
         int comps = 0;
-        int ans = binarySearch(arr, key, comps);
+        int ans = expSearch(arr, key, comps);
         if(ans == -1) cout << "Not ";
         cout << "Present " << comps << '\n';
     }

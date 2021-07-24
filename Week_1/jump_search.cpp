@@ -18,11 +18,12 @@ int binarySearch(vector<int> &arr, int low, int high, int key, int &comps){
 
 int jumpSearch(vector<int> &arr, int key, int &comps){
     int low = 1, high = 2, n = arr.size();
+    int factor = sqrt(n);
     while(high <= n){
         comps++;
         if(arr[high-1] > key) break;
         low = high;
-        high <<= 1;
+        high += factor;
     }
     if(high > n) high = n;
     return binarySearch(arr, low-1, high-1, key, comps);
@@ -42,11 +43,12 @@ int main(){
     cin >> t;
     while(t--){
         int n, key;
-        cin >> n >> key;
+        cin >> n;
         vector<int> arr(n);
         for(int i=0;i<n;i++){
             cin >> arr[i];
         }
+        cin >> key;
         int comps = 0;
         int ans = jumpSearch(arr, key, comps);
         if(ans == -1) cout << "Not ";
