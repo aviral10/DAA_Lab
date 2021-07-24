@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Given a sorted array and a key return the number of occurrences of key in the array
+// Time Complexity: O(logn), Space Complexity: O(1)
+
 
 // bias = -1 denotes keep searching to the left
 // bias = 1  denotes keep searching to the right

@@ -1,0 +1,3 @@
+No Sequence Found
+1 6 7  Elements: [28 92 120]
+0 5 8  Elements: [64 107 171]
