@@ -3,8 +3,8 @@ using namespace std;
 
 // Given an array and a key, search the key in the array
 // if found print the number of comparisons made else print -1
-
-// Binary Seacrh, input must be sorted
+// Binary Seacrh, provided input must be sorted
+// Time Complexity: O(logn), Space Complexity: O(1)
 int binarySearch(vector<int> &arr, int key, int &comps){
     int low = 0, high = arr.size()-1;
     while(low<=high){

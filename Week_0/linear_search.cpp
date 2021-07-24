@@ -3,7 +3,7 @@ using namespace std;
 
 // Given an array and a key, search the key in the array
 // if found print the number of comparisons made else print -1
-
+// Time Complexity: O(N), Space Complexity: O(1)
 int findElement(vector<int> &arr, int key){
     int comps = 0;
     for(int i=0;i<(int)arr.size();i++){
