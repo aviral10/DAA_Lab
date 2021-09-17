@@ -2,7 +2,7 @@
 using namespace std;
 
 // Given a graph, design an algorithm to find if a path exists between 2 given vertices or not
-// Time Complexity: O(N), Space Complexity: O(n)
+// Time Complexity: O(n), Space Complexity: O(n)
 
 
 bool DFS(vector<vector<int>> &g, int a, int b){
