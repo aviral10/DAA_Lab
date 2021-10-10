@@ -1,9 +1,65 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Find the smallest weight of a path from source vertex to destination vertex of length exactly k
-// Time Complexity: O(k*V^3)
-// Space Complexity: O(k-*n^2);
+// Calculate Maximum Spanning Tree of a graph
+// Time Complexity: O(E*log(V))
+// Space Complexity: O(V+E)
+
+struct UF{
+    vector<int> e;
+    UF(int n){ e.assign(n, -1); }
+    bool sameSet(int a, int b) {return find(a) == find(b);}
+    int size(int x) { return -e[find(x)];}
+    int find(int x) { return e[x] < 0? x: e[x] = find(e[x]);}
+    bool join(int a, int b){
+        a  = find(a); b = find(b);
+        if(a == b) return false;
+        if(e[a] > e[b]) swap(a,b);
+        e[a] += e[b];
+        e[b] = a;
+        return true;
+    }
+};
+
+struct Edge{
+    int weight;
+    int a,b;
+    Edge(int aa, int bb, int w){
+        weight = w;
+        a = aa;
+        b = bb;
+    }
+};
+
+int kruskalsMST(vector<vector<int>> &g){
+    int n = g.size();
+    UF uf(n+1);
+    vector<Edge> edges;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            if(g[i][j] == 0) continue;
+            Edge temp(i, j, -g[i][j]);
+            edges.push_back(temp);
+        }
+    }
+    sort(edges.begin(), edges.end(), [&](Edge &a, Edge &b){
+        return a.weight < b.weight;
+    });
+    int ans = 0;
+    int c = 0;
+    for(int i=0;i<edges.size();i++){
+        int a = edges[i].a;
+        int b = edges[i].b;
+        int w = -edges[i].weight;
+        if(!uf.sameSet(a,b)){
+            ans += w;
+            uf.join(a,b);
+            c++;
+        }
+        if(c == n-1) break;
+    }
+    return ans;
+}
 
 
 int main(){
@@ -16,43 +72,18 @@ int main(){
 
     int n;
     cin >> n;
-    
-    vector<vector<int>> g(n, vector<int> (n, 0));
-    // input the adjacency matrix
+    vector<vector<int>> g(n+1, vector<int> (n+1, 0));
     for(int i=0;i<n;i++){
         for(int j=0;j<n;j++){
             cin >> g[i][j];
         }
     }
-    int source, dest, k;
-    cin >> source >> dest;
-    cin >> k;
 
-    // Idea: Path of length 7 = path of length 6 + edge_weight
-    int dp[n][n][k+1];
-    memset(dp, 0, sizeof(dp));
-    for(int len=1;len<=k;len++){
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                dp[i][j][len] = 1e8;
+    int ans = kruskalsMST(g);
+    cout << "Maximum Spanning Weight: ";
+    cout << ans << '\n';
 
-                // e.g: 1-2-3-----x-----5
-                // this loop finds that x, if there is one then 
-                // path of length k from 1 to 5 = path of length k-1 from 1 to x + weight(x, 5);
-                // Maintain minimum of all such paths
-                for(int x=0;x<n;x++){
-                    if(g[x][j] != 0 and (x != i or len == 1)){
-                        dp[i][j][len] = min(dp[i][j][len], dp[i][x][len-1] + g[x][j]);
-                    }
-                }
-            }
-        }
-    }
 
-    if(dp[source-1][dest-1][k] >= 1e8) 
-        cout << "No paths of length " << k << " from " << source << " to " << dest << " exists\n";
-    else
-        cout << "Weight of shortest path from " << source << " to " << dest
-        << " with " << k << " edges: " << dp[source-1][dest-1][k] << '\n'; 
+     
     return 0;
 }

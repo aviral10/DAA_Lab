@@ -1,1 +1,1 @@
-Weight of shortest path from 1 to 4 with 2 edges: 9
+Maximum Spanning Weight: 59
