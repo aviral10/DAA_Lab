@@ -22,7 +22,7 @@ struct Edge{
 int primsMST(vector<vector<int>> &g){
     set<int> tree;
     int n = g.size();
-    // Max heap
+    // Min heap
     priority_queue<Edge, vector<Edge>, Edge> q;
     int mn = INT_MAX;
     Edge mini;
