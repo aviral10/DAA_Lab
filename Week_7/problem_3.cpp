@@ -3,7 +3,7 @@ using namespace std;
 
 // Find the smallest weight of a path from source vertex to destination vertex of length exactly k
 // Time Complexity: O(k*V^3)
-// Space Complexity: O(k-*n^2);
+// Space Complexity: O(k*n^2);
 
 
 int main(){
